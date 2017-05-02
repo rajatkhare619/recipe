@@ -1,14 +1,25 @@
-/**
- * Created by rajat.khare on 12/04/17.
- */
+import { Component } from '@angular/core';
+import { Response } from '@angular/http';
 
-import {Component} from '@angular/core';
+import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
-    selector:'app-header',
-    templateUrl:'header.component.html'
+  selector: 'app-header',
+  templateUrl: './header.component.html'
 })
+export class HeaderComponent {
+  constructor(private dataStorageService: DataStorageService) {}
 
-export class HeaderComponent{
+  onSaveData() {
+    this.dataStorageService.storeRecipes()
+      .subscribe(
+        (response: Response) => {
+          console.log(response);
+        }
+      );
+  }
 
+  onFetchData() {
+    this.dataStorageService.getRecipes();
+  }
 }

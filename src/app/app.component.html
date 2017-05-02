@@ -1,12 +1,7 @@
-<app-header></app-header>
+<app-header (featureSelected)="onNavigate($event)"></app-header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <!--ngIF approach for changing pages-->
-     <!--<app-recipes *ngIf="loadedFeature === 'recipe'"></app-recipes>-->
-      <!--<app-shopping-list *ngIf="loadedFeature !== 'recipe'"></app-shopping-list>-->
-
-      <!--Routing approach for changing pages-->
       <router-outlet></router-outlet>
     </div>
   </div>
