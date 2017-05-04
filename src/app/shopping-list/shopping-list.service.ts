@@ -1,14 +1,12 @@
-import {Ingredient} from "../shared/ingredient.model";
-import {Subject} from "rxjs";
-/**
- * Created by rajat.khare on 17/04/17.
- */
+import { Ingredient } from '../shared/ingredient.model';
+import { Subject } from 'rxjs/Subject';
+
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
-  private ingredients:Ingredient[] = [
-    new Ingredient("Apples", 5),
-    new Ingredient("Tomatoes", 10)
+  private ingredients: Ingredient[] = [
+    new Ingredient('Apples', 5),
+    new Ingredient('Tomatoes', 10),
   ];
 
   getIngredients() {
@@ -24,23 +22,21 @@ export class ShoppingListService {
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
+  addIngredients(ingredients: Ingredient[]) {
+    // for (let ingredient of ingredients) {
+    //   this.addIngredient(ingredient);
+    // }
+    this.ingredients.push(...ingredients);
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
   updateIngredient(index: number, newIngredient: Ingredient) {
-this.ingredients[index] = newIngredient;
-this.ingredientsChanged.next(this.ingredients.slice());
+    this.ingredients[index] = newIngredient;
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   deleteIngredient(index: number) {
     this.ingredients.splice(index, 1);
     this.ingredientsChanged.next(this.ingredients.slice());
-  }
-
-  addIngredients(ingredients: Ingredient[]) {
-/*for (let ingredient of ingredients) {  //Lot of events will be emitted unnecessarily so this approach isn't recommended
-  this.addIngredient(ingredient);
-}*/
-
-this.ingredients.push(...ingredients);
-    this.ingredientsChanged.next(this.ingredients.slice());
-
   }
 }

@@ -1,16 +1,12 @@
-import {Ingredient} from "../shared/ingredient.model";
-/**
- * Created by rajat.khare on 13/04/17.
- */
+import { Ingredient } from '../shared/ingredient.model';
 
+export class Recipe {
+  public name: string;
+  public description: string;
+  public imagePath: string;
+  public ingredients: Ingredient[];
 
-export class Recipe{
-  public name;
-  public description;
-  public imagePath;
-public ingredients: Ingredient[];
-  constructor(name:string, desc:string, imagePath:string, ingredients: Ingredient[])
-  {
+  constructor(name: string, desc: string, imagePath: string, ingredients: Ingredient[]) {
     this.name = name;
     this.description = desc;
     this.imagePath = imagePath;
