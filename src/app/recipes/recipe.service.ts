@@ -5,10 +5,11 @@ import {Recipe} from "./recipe.model";
 import { Injectable } from "@angular/core";
 import {Ingredient} from "../shared/ingredient.model";
 import {ShoppingListService} from "../shopping-list/shopping-list.service";
+import {Subject} from "rxjs";
 
 @Injectable()
 export class RecipeService {
-
+recipesChanged = new Subject<Recipe[]>();
   constructor(private slService: ShoppingListService) {}
 
   private recipes: Recipe[] = [
@@ -16,7 +17,7 @@ export class RecipeService {
       "Chicken Kathi roll",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Chicken-kathi-roll-recipe.jpg/640px-Chicken-kathi-roll-recipe.jpg",
       [new Ingredient("Tomatoes", 3),
-       new Ingredient("Potatoes", 4)]),
+        new Ingredient("Potatoes", 4)]),
     new Recipe("Another Recipe",
       "Kachori",
       "http://www.manjulaskitchen.com/blog/wp-content/uploads/urad_dal_kachori.jpg",
@@ -33,7 +34,23 @@ export class RecipeService {
     return this.recipes[index];
   }
 
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
-this.slService.addIngredients(ingredients);
+    this.slService.addIngredients(ingredients);
   }
 }
